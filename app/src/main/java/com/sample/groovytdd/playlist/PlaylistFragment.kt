@@ -1,4 +1,4 @@
-package com.sample.groovytdd
+package com.sample.groovytdd.playlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.Exception
+import com.sample.groovytdd.R
 
 
 class PlaylistFragment : Fragment() {
