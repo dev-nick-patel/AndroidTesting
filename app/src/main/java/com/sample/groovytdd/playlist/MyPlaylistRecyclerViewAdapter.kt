@@ -1,4 +1,4 @@
-package com.sample.groovytdd
+package com.sample.groovytdd.playlist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.sample.groovytdd.R
 
 
 class MyPlaylistRecyclerViewAdapter(
@@ -22,7 +23,7 @@ class MyPlaylistRecyclerViewAdapter(
         val item = values[position]
         holder.playlistName.text = item.name
         holder.playlistCategory.text = item.category
-        holder.playlistImage.setImageResource(item.image)
+        holder.playlistImage.setImageResource(R.mipmap.ic_launcher)
     }
 
     override fun getItemCount(): Int = values.size

@@ -1,31 +1,35 @@
-package com.sample.groovytdd
+package com.sample.groovytdd.playlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.Exception
+import com.sample.groovytdd.R
+import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class PlaylistFragment : Fragment() {
 
-
+    @Inject
     lateinit var viewModel: PlaylistViewModel
-    lateinit var viewModelFactory: PlaylistViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_playlists, container, false)
-
-        setupViewModel()
 
         viewModel.playlists.observe(this as LifecycleOwner, Observer {
             if(it.getOrNull() != null)
@@ -47,11 +51,6 @@ class PlaylistFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = MyPlaylistRecyclerViewAdapter(it)
         }
-    }
-
-    private fun setupViewModel() {
-        viewModelFactory = PlaylistViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory).get(PlaylistViewModel::class.java)
     }
 
     companion object {
