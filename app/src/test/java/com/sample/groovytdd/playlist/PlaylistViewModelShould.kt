@@ -10,7 +10,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import petros.efthymiou.groovy.utils.getValueForTest
-import java.lang.RuntimeException
 
 
 class PlaylistViewModelShould : BaseUnitTest() {
@@ -35,12 +34,20 @@ class PlaylistViewModelShould : BaseUnitTest() {
 
         val viewModel = mockSuccessfulCase()
 
+
         assertEquals(expected, viewModel.playlists.getValueForTest())
     }
 
     @Test
     fun emitErrorWhenReceiveError(): Unit {
 
+        val viewModel = mockErrorCase()
+
+        assertEquals(exception, viewModel.playlists.getValueForTest()!!.exceptionOrNull())
+
+    }
+
+    private fun mockErrorCase(): PlaylistViewModel {
         runBlocking {
             whenever(repository.getPlaylists()).thenReturn(
                 flow {
@@ -50,9 +57,7 @@ class PlaylistViewModelShould : BaseUnitTest() {
         }
 
         val viewModel = PlaylistViewModel(repository)
-
-        assertEquals(exception, viewModel.playlists.getValueForTest()!!.exceptionOrNull())
-
+        return viewModel
     }
 
     private fun mockSuccessfulCase(): PlaylistViewModel {

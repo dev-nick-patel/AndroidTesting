@@ -1,10 +1,11 @@
 package com.sample.groovytdd.playlist
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-class PlaylistRepository {
-    suspend fun getPlaylists() : Flow<Result<List<Playlist>>> {
-        TODO("Not yet implemented")
-    }
-
+class PlaylistRepository(
+    private val service: PlaylistService
+) {
+    suspend fun getPlaylists() : Flow<Result<List<Playlist>>> =
+        service.fetchPlaylists()
 }
