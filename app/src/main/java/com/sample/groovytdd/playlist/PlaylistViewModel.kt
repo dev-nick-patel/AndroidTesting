@@ -1,10 +1,13 @@
 package com.sample.groovytdd.playlist
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PlaylistViewModel(
+
+class PlaylistViewModel @Inject constructor(
     private val repository: PlaylistRepository
 ): ViewModel() {
 
