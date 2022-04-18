@@ -1,5 +1,6 @@
-package com.sample.groovytdd.playlist
+package com.sample.groovytdd.di
 
+import com.sample.groovytdd.playlist.PlaylistAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

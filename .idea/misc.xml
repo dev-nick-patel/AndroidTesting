@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/2022/Nikunj_Projects/GroovyTDD/app/src/main/res/layout/abc.xml" value="0.21666666666666667" />
         <entry key="..\:/2022/Nikunj_Projects/GroovyTDD/app/src/main/res/layout/activity_main.xml" value="0.3109375" />
         <entry key="..\:/2022/Nikunj_Projects/GroovyTDD/app/src/main/res/layout/fragment_blank.xml" value="0.32916666666666666" />
         <entry key="..\:/2022/Nikunj_Projects/GroovyTDD/app/src/main/res/layout/fragment_playlist.xml" value="0.32916666666666666" />
-        <entry key="..\:/2022/Nikunj_Projects/GroovyTDD/app/src/main/res/layout/fragment_playlists.xml" value="0.3109375" />
+        <entry key="..\:/2022/Nikunj_Projects/GroovyTDD/app/src/main/res/layout/fragment_playlists.xml" value="0.2" />
         <entry key="..\:/2022/Nikunj_Projects/GroovyTDD/app/src/main/res/layout/playlist_item.xml" value="0.32916666666666666" />
+        <entry key="..\:/2022/Nikunj_Projects/GroovyTDD/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2275" />
       </map>
     </option>
   </component>

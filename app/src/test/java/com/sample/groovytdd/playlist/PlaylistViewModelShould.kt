@@ -7,8 +7,10 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.sample.groovytdd.utils.BaseUnitTest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import petros.efthymiou.groovy.utils.captureValues
 import petros.efthymiou.groovy.utils.getValueForTest
 
 
@@ -33,17 +35,43 @@ class PlaylistViewModelShould : BaseUnitTest() {
     fun emitsPlaylistsFromRepository() = runBlocking {
 
         val viewModel = mockSuccessfulCase()
-
-
         assertEquals(expected, viewModel.playlists.getValueForTest())
     }
 
     @Test
     fun emitErrorWhenReceiveError(): Unit {
+        val viewModel = mockErrorCase()
+        assertEquals(exception, viewModel.playlists.getValueForTest()!!.exceptionOrNull())
+    }
+
+    @Test
+    fun showSpinnerWhileLoading(): Unit = runTest {
+
+        val viewModel = mockSuccessfulCase()
+
+        viewModel.loader.captureValues {
+            viewModel.playlists.getValueForTest()
+            assertEquals(true, values[0])
+        }
+    }
+
+    @Test
+    fun closeLoaderAfterPlaylistsLoad() = runTest {
+
+        val viewModel = mockSuccessfulCase()
+        viewModel.loader.captureValues {
+            viewModel.playlists.getValueForTest()
+            assertEquals(false, values.last())
+        }
+    }
+    @Test
+    fun closeLoaderAfterError() = runTest {
 
         val viewModel = mockErrorCase()
-
-        assertEquals(exception, viewModel.playlists.getValueForTest()!!.exceptionOrNull())
+        viewModel.loader.captureValues {
+            viewModel.playlists.getValueForTest()
+            assertEquals(false, values.last())
+        }
 
     }
 
@@ -52,12 +80,9 @@ class PlaylistViewModelShould : BaseUnitTest() {
             whenever(repository.getPlaylists()).thenReturn(
                 flow {
                     emit(Result.failure<List<Playlist>>(exception))
-                }
-            )
+                })
         }
-
-        val viewModel = PlaylistViewModel(repository)
-        return viewModel
+        return PlaylistViewModel(repository)
     }
 
     private fun mockSuccessfulCase(): PlaylistViewModel {

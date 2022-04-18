@@ -1,7 +1,6 @@
 package com.sample.groovytdd.playlist
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PlaylistRepository @Inject constructor(
