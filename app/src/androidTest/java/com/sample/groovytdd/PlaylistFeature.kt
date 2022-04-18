@@ -3,6 +3,7 @@ package com.sample.groovytdd
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -11,6 +12,7 @@ import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions.asse
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
 import com.adevinta.android.barista.internal.matcher.DrawableMatcher.Companion.withDrawable
+import com.sample.groovytdd.di.idlingResource
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -25,7 +27,7 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class PlaylistFeature {
+class PlaylistFeature : BaseUITest() {
 
     val mActivityRule = ActivityTestRule(MainActivity::class.java)
         @Rule get
@@ -38,8 +40,6 @@ class PlaylistFeature {
 
     @Test
     fun displayListOfPlayList(){
-
-        Thread.sleep(4000L)
 
         assertRecyclerViewItemCount(R.id.playlists_list,10)
 
@@ -55,38 +55,32 @@ class PlaylistFeature {
 
         onView(allOf(withId(R.id.playlist_image),
             isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 0))))
-            .check(matches(withDrawable(R.mipmap.ic_launcher)))
+            .check(matches(withDrawable(R.mipmap.rock)))
             .check(matches(isDisplayed()))
 
     }
 
     @Test
     fun displayLoaderWhileFetchingThePlaylists(){
+        IdlingRegistry.getInstance().unregister(idlingResource)
         assertDisplayed(R.id.loader)
     }
 
     @Test
     fun hideLoader() {
-        Thread.sleep(5000L)
         assertNotDisplayed(R.id.loader)
     }
+    @Test
+    fun displayRockImageForRockListItems(){
 
-    fun nthChildOf(parentMatcher: Matcher<View>, childPosition: Int): Matcher<View> {
-        return object : TypeSafeMatcher<View>() {
-            override fun describeTo(description: Description) {
-                description.appendText("position $childPosition of parent ")
-                parentMatcher.describeTo(description)
-            }
+        onView(allOf(withId(R.id.playlist_image),
+            isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 0))))
+            .check(matches(withDrawable(R.mipmap.rock)))
+            .check(matches(isDisplayed()))
 
-            public override fun matchesSafely(view: View): Boolean {
-                if (view.parent !is ViewGroup) return false
-                val parent = view.parent as ViewGroup
-
-                return (parentMatcher.matches(parent)
-                        && parent.childCount > childPosition
-                        && parent.getChildAt(childPosition) == view)
-            }
-        }
+        onView(allOf(withId(R.id.playlist_image),
+            isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 3))))
+            .check(matches(withDrawable(R.mipmap.rock)))
+            .check(matches(isDisplayed()))
     }
-
 }

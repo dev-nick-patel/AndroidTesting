@@ -96,6 +96,7 @@ dependencies {
 
 
     //unit test
+    testImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
     testImplementation 'junit:junit:'+rootProject.extJUnitVersion
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:'+rootProject.mockitoVersion
     testImplementation 'org.mockito:mockito-inline:'+rootProject.mockitoInlineVersion
@@ -104,6 +105,7 @@ dependencies {
 
 
     //UI test- Acceptance test
+    androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
     androidTestImplementation 'androidx.test.ext:junit-ktx:'+rootProject.androidxJUnitVersion
     androidTestImplementation 'androidx.test:runner:'+rootProject.runnerVersion
     androidTestImplementation 'androidx.test.ext:junit:'+rootProject.androidxJUnitVersion
